@@ -71,13 +71,13 @@ print("A acuracia foi de %.2f%%" %acuracy)
 # Método KNN
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
-train_x = scaler.fit_transform(train_x)
-test_x = scaler.transform(test_x)
+train_x_scaled = scaler.fit_transform(train_x)
+test_x_scaled = scaler.transform(test_x)
 
 
 from sklearn.neighbors import KNeighborsClassifier
-knn = KNeighborsClassifier(metric='euclidean')
-knn.fit(train_x, train_y)
-previsoes = knn.predict(test_x)
-acuracy = accuracy_score(test_y, previsoes) *100
+knn = KNeighborsClassifier(n_neighbors=2 ,metric='euclidean')
+knn.fit(train_x_scaled, train_y)
+predito_knn = knn.predict(test_x_scaled)
+acuracy = accuracy_score(test_y, predito_knn) *100
 print("A acuracia foi de %.2f%%" %acuracy)
