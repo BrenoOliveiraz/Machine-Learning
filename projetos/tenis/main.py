@@ -39,8 +39,6 @@ dados = pd.concat([dados, dummie_dados], axis=1)
 # Remover as colunas originais que foram convertidas em dummies
 dados.drop(colunas_categoricas, axis=1, inplace=True)
 
-print(dados.head())
-
 x = dados.drop(columns=["play"], axis=1)
 y = dados["play"]
 
@@ -67,15 +65,3 @@ plot_tree(model, filled=True, rounded=True, feature_names=x.columns.tolist(), cl
 plt.show()
 
 
-
-"""
-
-
-model = LinearSVC()
-model.fit(train_x, train_y)
-
-previsoes = model.predict(test_x)
-
-acuracy = accuracy_score(test_y, previsoes) *100
-print("A acuracia foi de %.2f%%" %acuracy)
-"""
