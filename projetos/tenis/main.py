@@ -42,9 +42,11 @@ dados.drop(colunas_categoricas, axis=1, inplace=True)
 x = dados.drop(columns=["play"], axis=1)
 y = dados["play"]
 
+
+
 train_x, test_x, train_y, test_y = train_test_split(x, y, stratify=y , random_state=SEED, test_size=0.25)
 
-model = DecisionTreeClassifier(max_depth=3)
+model = DecisionTreeClassifier(max_depth=5)
 model.fit(train_x, train_y)
 
 previsoes = model.predict(test_x)
@@ -52,16 +54,30 @@ previsoes = model.predict(test_x)
 acuracy = accuracy_score(test_y, previsoes) *100
 print("A acuracia foi de %.2f%%" %acuracy)
 
-from sklearn.tree import plot_tree
+###############Plot gráfico#######################
+# from sklearn.tree import plot_tree
 
-# Configurar o tamanho da figura
-plt.figure(figsize=(10, 8))
+# # Configurar o tamanho da figura
+# plt.figure(figsize=(14, 8))
 
-# Plotar a árvore de decisão
-plot_tree(model, filled=True, rounded=True, feature_names=x.columns.tolist(), class_names=["No", "Yes"])
-
-
-# Mostrar o gráfico
-plt.show()
+# # Plotar a árvore de decisão
+# plot_tree(model, filled=True, rounded=True, feature_names=x.columns.tolist(), class_names=["No", "Yes"])
 
 
+# # Mostrar o gráfico
+# plt.show()
+##################################################
+
+# Método KNN
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+train_x = scaler.fit_transform(train_x)
+test_x = scaler.transform(test_x)
+
+
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(metric='euclidean')
+knn.fit(train_x, train_y)
+previsoes = knn.predict(test_x)
+acuracy = accuracy_score(test_y, previsoes) *100
+print("A acuracia foi de %.2f%%" %acuracy)
