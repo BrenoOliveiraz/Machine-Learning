@@ -50,15 +50,15 @@ train_x = scaler.transform(raw_train_x)
 test_x = scaler.transform(raw_test_x)
 
 model = DecisionTreeClassifier(max_depth=3)
-model.fit(train_x, train_y)
-previsoes = model.predict(test_x)
+model.fit(raw_train_x, train_y)
+previsoes = model.predict(raw_test_x)
 acuracy = accuracy_score(test_y, previsoes) *100
 print("A acuracia foi de %.2f%%" %acuracy)
 
 from sklearn.tree import plot_tree
 
 # Configurar o tamanho da figura
-plt.figure(figsize=(10, 5))
+plt.figure(figsize=(20, 5))
 
 # Plotar a árvore de decisão
 plot_tree(model, filled=True, rounded=True, feature_names=x.columns.tolist(), class_names=["No", "Yes"])
