@@ -1,11 +1,12 @@
 # Importe as bibliotecas necessárias
 import pandas as pd
 import numpy as np
-from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from datetime import datetime
+from sklearn.tree import DecisionTreeClassifier
+import matplotlib.pyplot as plt
 
 # Define a URI do conjunto de dados
 uri = 'https://gist.githubusercontent.com/guilhermesilveira/4d1d4a16ccbf6ea4e0a64a38a24ec884/raw/afd05cb0c796d18f3f5a6537053ded308ba94bf7/car-prices.csv'
@@ -48,15 +49,22 @@ scaler.fit(raw_train_x)
 train_x = scaler.transform(raw_train_x)
 test_x = scaler.transform(raw_test_x)
 
-# Cria e treina o modelo de classificação SVM (Support Vector Machine)
-model = SVC()
+model = DecisionTreeClassifier(max_depth=3)
 model.fit(train_x, train_y)
-
-# Realiza previsões no conjunto de teste
 previsoes = model.predict(test_x)
+acuracy = accuracy_score(test_y, previsoes) *100
+print("A acuracia foi de %.2f%%" %acuracy)
 
-# Calcula a acurácia do modelo
-acuracy = accuracy_score(test_y, previsoes) * 100
+from sklearn.tree import plot_tree
 
-# Exibe a acurácia
-print(f'A acurácia foi de {acuracy:.2f}%')
+# Configurar o tamanho da figura
+plt.figure(figsize=(10, 5))
+
+# Plotar a árvore de decisão
+plot_tree(model, filled=True, rounded=True, feature_names=x.columns.tolist(), class_names=["No", "Yes"])
+
+
+# Mostrar o gráfico
+plt.show()
+
+
