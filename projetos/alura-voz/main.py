@@ -1,5 +1,6 @@
 # Importando a biblioteca pandas para trabalhar com dados tabulares
 import pandas as pd
+from sklearn.metrics import accuracy_score
 
 # Carregando o conjunto de dados a partir de uma URL
 dados = pd.read_csv('https://raw.githubusercontent.com/alura-cursos/ML_Classificacao_por_tras_dos_panos/main/Dados/Customer-Churn.csv')
@@ -50,6 +51,5 @@ knn.fit(X_treino, y_treino)
 
 # Realizando previsões com os dados de teste
 predito_knn = knn.predict(X_teste)
-
-# Exibindo as previsões
-print(predito_knn)
+acuracy = accuracy_score(y_teste, predito_knn) *100
+print("A acuracia foi de %.2f%%" %acuracy)

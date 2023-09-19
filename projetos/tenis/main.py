@@ -31,6 +31,7 @@ dados['day'] = dados['day'].replace(swap2)
 colunas_categoricas = ["outlook", "temp", "humidity", "wind"]
 
 # Aplicar get_dummies às colunas categóricas
+
 dummie_dados = pd.get_dummies(dados[colunas_categoricas], drop_first=True)
 
 # Concatenar as colunas dummy com o DataFrame original
@@ -41,7 +42,6 @@ dados.drop(colunas_categoricas, axis=1, inplace=True)
 
 x = dados.drop(columns=["play"], axis=1)
 y = dados["play"]
-
 
 
 train_x, test_x, train_y, test_y = train_test_split(x, y, stratify=y , random_state=SEED, test_size=0.25)
@@ -81,3 +81,4 @@ knn.fit(train_x_scaled, train_y)
 predito_knn = knn.predict(test_x_scaled)
 acuracy = accuracy_score(test_y, predito_knn) *100
 print("A acuracia foi de %.2f%%" %acuracy)
+
