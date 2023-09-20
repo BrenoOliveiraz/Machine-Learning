@@ -35,9 +35,6 @@ test_x = [misterio1, misterio2, misterio3]
 test_y = [0, 1, 1]
 previsoes = model.predict(test_x)
 
-
-
-
 #se der print(previsoes == test_y) na comparação, o numpy vai comparar o predict com a atribuição do meu test_y e retornar um array dizendo se é true ou false
 
 #para tirar a média de acertos
