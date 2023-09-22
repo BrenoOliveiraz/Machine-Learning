@@ -4,9 +4,9 @@ SEED=1234
 np.random.seed(SEED)
 pd.set_option('display.max_columns', None)
 
-uri = 'projetos/recomendador-musicas(em_produção)/Dados_totais.csv'
-uri2 = 'projetos/recomendador-musicas(em_produção)/data_by_genres.csv'
-uri3 = 'projetos/recomendador-musicas(em_produção)/data_by_year.csv'
+uri = 'projetos/recomendador-musicas(producao)/Dados_totais.csv'
+uri2 = 'projetos/recomendador-musicas(producao)/data_by_genres.csv'
+uri3 = 'projetos/recomendador-musicas(producao)/data_by_year.csv'
 general_data = pd.read_csv(uri)
 data_gender = pd.read_csv(uri2)
 data_years = pd.read_csv(uri3)
