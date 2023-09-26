@@ -30,25 +30,40 @@ X_normalizado = norm.fit_transform(X)
 Xmaria_normalizado = norm.transform(pd.DataFrame(Xmaria, columns=X.columns))
 
 # Calculando a distância Euclidiana entre o exemplo de Maria e o primeiro exemplo nos dados padronizados
-
 a = Xmaria_normalizado
 b = X_normalizado[0]
-distancia = np.sqrt(np.sum(np.square(a - b)))
+distancia = np.sqrt(np.sum(np.square(a - b))) #distancia da maria para o client 0 da base
 
 # Dividindo os dados em conjuntos de treinamento e teste
 from sklearn.model_selection import train_test_split
-X_treino, X_teste, y_treino, y_teste = train_test_split(X_normalizado, y, test_size=0.3, random_state=123)
+train_x, test_x, train_y, test_y = train_test_split(X_normalizado, y, test_size=0.3, random_state=123)
 
-# Importando a biblioteca para criar o modelo KNN (K-Nearest Neighbors)
+# Utilizando modelo KNN (K-Nearest Neighbors)
 from sklearn.neighbors import KNeighborsClassifier
-# Instanciando o modelo KNN com a métrica de distância euclidiana
 knn = KNeighborsClassifier(metric='euclidean', n_neighbors=10)
+knn.fit(train_x, train_y)
+predito_knn = knn.predict(test_x)
 
-# Treinando o modelo com os dados de treinamento
-knn.fit(X_treino, y_treino)
+# Utilizando metodo probabilistico(Teorema de Naive Bayes)
+from sklearn.naive_bayes import BernoulliNB
+np.median(train_x) #tirar a media para colocar como parametro binario do modelo
+bnb = BernoulliNB(binarize=0.44)
+bnb.fit(train_x, train_y)
+predito_bnb = bnb.predict(test_x)
+
+
+#Utilizando metodo de arvore de decisões
+from sklearn.tree import DecisionTreeClassifier
+dtc = DecisionTreeClassifier(criterion='entropy', random_state=42)
+dtc.fit(train_x, train_y)
+predito_dtc= dtc.predict(test_x)
+
 
 from sklearn.metrics import accuracy_score
-# Realizando previsões de churn
-predito_knn = knn.predict(X_teste)
-acuracy = accuracy_score(y_teste, predito_knn) *100
-print("A acuracia foi de %.2f%%" %acuracy)
+acuracy = accuracy_score(test_y, predito_knn) *100
+acuracy2 = accuracy_score(test_y, predito_bnb) *100
+acuracy3 = accuracy_score(test_y, predito_dtc) *100
+print(f"A taxa de acerto foi de KNN{acuracy: .2f}%, BNB{acuracy2: .2f}% e DTC{acuracy3: .2f}% ")
+
+
+
