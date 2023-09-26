@@ -1,10 +1,8 @@
-# Importando a biblioteca pandas para trabalhar com dados tabulares
 import pandas as pd
 import numpy as np
-# Carregando o conjunto de dados a partir de uma URL
+
 dados = pd.read_csv('https://raw.githubusercontent.com/alura-cursos/ML_Classificacao_por_tras_dos_panos/main/Dados/Customer-Churn.csv')
 
-# Modificando manualmente algumas colunas usando um dicionário de tradução
 traducao_dic = {'Sim': 1, 'Nao': 0}
 dadosmodificados = dados[['Conjuge', 'Dependentes', 'TelefoneFixo', 'PagamentoOnline', 'Churn']].replace(traducao_dic)
 
@@ -14,14 +12,13 @@ dummie_dados = pd.get_dummies(dados.drop(['Conjuge', 'Dependentes', 'TelefoneFix
 # Combinando as variáveis transformadas com as originais
 dados_final = pd.concat([dadosmodificados, dummie_dados], axis=1)
 
-# Exemplo de uma entrada (dados de Maria)
+# Entrada de dados nova
 Xmaria = [[0, 0, 1, 1, 0, 0, 39.90, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1]]
 
-# Divisão em inputs (X) e outputs (y)
+
 X = dados_final.drop('Churn', axis=1)
 y = dados_final['Churn']
 
-# Importando a biblioteca para padronizar os dados
 from sklearn.preprocessing import StandardScaler
 norm = StandardScaler()
 
@@ -59,6 +56,7 @@ dtc.fit(train_x, train_y)
 predito_dtc= dtc.predict(test_x)
 
 
+# Taxa de acerto dos predicts
 from sklearn.metrics import accuracy_score
 acuracy = accuracy_score(test_y, predito_knn) *100
 acuracy2 = accuracy_score(test_y, predito_bnb) *100
